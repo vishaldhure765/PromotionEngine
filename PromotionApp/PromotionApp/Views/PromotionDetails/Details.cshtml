@@ -1,0 +1,59 @@
+﻿@model PromotionApp.Edmx.PromotionMaster
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>PromotionMaster</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Quantity)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Quantity)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Discount)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Discount)
+        </dd>
+
+        <dt>
+            Product Price
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ProductPrize)
+        </dd>
+
+        <dt>
+            Promotion Price
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PromotionPrize)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ProductMaster.Code)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ProductMaster.Code)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    <button type="button" class="btn btn-default" onclick="location.href='@Url.Action("Edit",new { id = Model.Id })'">Edit</button>
+    <button type="button" class="btn btn-default" onclick="location.href='@Url.Action("Index")'">Back to List</button>
+</p>

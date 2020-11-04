@@ -1,0 +1,79 @@
+﻿@model IEnumerable<PromotionApp.Models.MyOrderViewModel>
+@{
+    ViewBag.Title = "MyOrder";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>MyOrder</h2>
+@{
+    var sum = 0;
+}
+<div id="dvContents">
+
+    <table class="table table-hover" width="100%">
+        <thead>
+            <tr>
+                <th>Code</th>
+                <th>Name</th>
+                <th>Price(each)</th>
+                <th>Quantity</th>
+                <th>Item Total</th>
+                <th>Remove</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var x in Model)
+            {
+                <tr>
+                    <td>@x.Code</td>
+                    <td>@x.Name</td>
+                    <td>&#8377;@x.Prize</td>
+                    <td>
+                        @x.Quantity
+                        @*@Html.DropDownListFor(model => x.Quantity,
+        new SelectList(new List <Object>{new { value = 1 , text = "1"  },
+        new { value = 2 , text = "2" },new { value = 3 , text = "3"}
+            },"value","text",x.Quantity))*@
+                    </td>
+                    <td>&#8377;@x.ItemTotal</td>
+                    <td>
+                        <button id="btn_delete" class="label label-primary" data-slno="@x.Id" onclick="location.href='@Url.Action("Remove","AddToCart",x)'">
+                            <img src="~/Images/delete.png" height="15" width="15" />
+                        </button>
+                    </td>
+                </tr>
+            }
+            @if (Model.Count() == 0)
+            {
+                <tr>
+                    <td style="text-align:center" colspan="6"><h4>Cart is Empty</h4></td>
+                </tr>
+            }
+        </tbody>
+
+        @foreach (var x in Model)
+        {
+            sum = Convert.ToInt32(x.ItemTotal) + sum;
+
+        }
+
+        @if (Model.Count() > 0)
+        {
+            <tfoot>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td><b>Total</b></td>
+                    <td>
+                        &#8377;  @sum
+                    </td>
+                </tr>
+            </tfoot>
+
+        }
+
+    </table>
+    <button type="button" class="btn btn-success" onclick="location.href='@Url.Action("Index","Products")'">Continue Shopping</button>
+    <button type="button" class="btn btn-warning" onclick="location.href='@Url.Action("PlaceOrder","Order")'">Place Order</button>
+</div>

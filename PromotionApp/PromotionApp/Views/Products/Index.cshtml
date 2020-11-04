@@ -1,0 +1,70 @@
+﻿@model IEnumerable<PromotionApp.Edmx.ProductMaster>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<style>
+    .card {
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+        max-width: 300px;
+        text-align: center;
+        font-family: arial;
+    }
+
+    .price {
+        color: grey;
+        font-size: 22px;
+    }
+
+    .card a {
+        border: none;
+        outline: 0;
+        padding: 12px;
+        color: white;
+        background-color: #000;
+        text-align: center;
+        cursor: pointer;
+        width: 100%;
+        font-size: 18px;
+    }
+
+    .card button:hover {
+        opacity: 0.7;
+    }
+</style>
+<h2><span style="color:crimson">Products</span></h2>
+<div class="row">
+    @foreach (var m in Model)
+    {
+
+        <div class="col-md-3">
+            <div class="card">
+                <h1>@m.Name</h1>
+                <p class="price">&#8377;@m.Prize</p>
+                @if (@m.PromotionMasters.Count > 0)
+                {
+                    <p><span style="color:red">Offer : </span>Get @m.PromotionMasters.ToList()[0].Quantity for &#8377; @m.PromotionMasters.ToList()[0].PromotionPrize.</p>
+                }
+                else
+                {
+                    <p><span style="color:red">Offer : </span> - N/A </p>
+                }
+                <a id="btn_add" class="btn btn-info btn-sm" href="@Url.Action("Add", "AddToCart", m)">
+                    <span class="glyphicon glyphicon-shopping-cart"></span> Add To Cart
+                </a>
+            </div>
+        </div>
+
+    }
+
+</div>
+<div class="row form-group">
+    @if (Model.Count() > 0)
+    {
+        <hr />
+        <button type="button" class="btn btn-success form-group" onclick="location.href='@Url.Action("MyOrder", "AddToCart")'">Go To Cart</button>
+    }
+</div>
+
+

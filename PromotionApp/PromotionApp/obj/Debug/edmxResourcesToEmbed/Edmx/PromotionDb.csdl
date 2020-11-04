@@ -1,0 +1,46 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="PromotionEngineModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="ProductMaster">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Code" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Prize" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
+    <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
+    <NavigationProperty Name="PromotionMasters" Relationship="Self.FK_PromotionMaster_ProductMaster" FromRole="ProductMaster" ToRole="PromotionMaster" />
+  </EntityType>
+  <EntityType Name="PromotionMaster">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ProductId" Type="Int64" Nullable="false" />
+    <Property Name="Quantity" Type="Int32" Nullable="false" />
+    <Property Name="Discount" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="ProductPrize" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="PromotionPrize" Type="Decimal" Precision="18" Scale="2" />
+    <NavigationProperty Name="ProductMaster" Relationship="Self.FK_PromotionMaster_ProductMaster" FromRole="PromotionMaster" ToRole="ProductMaster" />
+  </EntityType>
+  <Association Name="FK_PromotionMaster_ProductMaster">
+    <End Role="ProductMaster" Type="Self.ProductMaster" Multiplicity="1" />
+    <End Role="PromotionMaster" Type="Self.PromotionMaster" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ProductMaster">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="PromotionMaster">
+        <PropertyRef Name="ProductId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="PromotionEngineEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="ProductMasters" EntityType="Self.ProductMaster" />
+    <EntitySet Name="PromotionMasters" EntityType="Self.PromotionMaster" />
+    <AssociationSet Name="FK_PromotionMaster_ProductMaster" Association="Self.FK_PromotionMaster_ProductMaster">
+      <End Role="ProductMaster" EntitySet="ProductMasters" />
+      <End Role="PromotionMaster" EntitySet="PromotionMasters" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>
